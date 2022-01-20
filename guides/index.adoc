@@ -1,0 +1,13 @@
+= Neo4j Graph Data Science
+
+The Neo4j Graph Data Science (GDS) library contains a set of graph algorithms, exposed through Cypher procedures.  Graph algorithms provide insights into the graph structure and elements, for example, by computing centrality, similarity scores, and detecting communities.  The GDS library is divided into three tiers of maturity: product, beta, and alpha.
+
+This guide demonstrates how to create the graph projections necessary to run a variety of GDS algorithms and some examples of using the GDS library to run basic graph algorithms.
+
+The official GDS library documentation can be found https://neo4j.com/docs/graph-data-science/current[here].
+
+== Introduction
+
+== Graph Model
+
+== Loading the data
