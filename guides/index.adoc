@@ -10,6 +10,8 @@ The official GDS library documentation can be found https://neo4j.com/docs/graph
 
 Before you run any of the algorithms, you need to import your data.  We will be working with an example dataset that shows the connections between different airports across the world.  
 
+*_Insert graph schema image here_*
+
 === Attribution
 
 This dataset was initially created by Kelvin Lawrence, available under the Apache License Version 2.0.  The original dataset can be found https://github.com/krlawrence/graph[GitHub repository] and has been modified for the purposes of this guide.
@@ -30,6 +32,8 @@ CREATE CONSTRAINT continents ON (c:Continent) ASSERT c.code IS UNIQUE;
 ----
 
 Next we will import the Airport, Country, and Continent nodes and set their properties.
+
+*_Redo this section such that we do not populate airport nodes with properties that then get used for nodes_*
 
 [source,cypher]
 ----
