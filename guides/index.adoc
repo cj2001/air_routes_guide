@@ -66,5 +66,57 @@ MERGE (c:Continent {code: row.code})
 SET c.descr = row.descr;
 ----
 
+Finally, we will import all of our relationships.  Note that some of the relationships only exist in the Airport nodes list (in the CSV file).  We will use these to artifically create the City and Region nodes as well as the relationships between them and the Airport, Country, and Continent nodes.
+
+[source,cypher]
+----
+LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/cj2001/bite_sized_data_science/main/data/iroutes-edges.csv' AS row
+MATCH (source:Airport {iata: row.src})
+MATCH (target:Airport {iata: row.dest})
+MERGE (source)-[r:HAS_ROUTE]->(target)
+ON CREATE SET r.distance = toInteger(row.dist);
+
+MATCH (a:Airport)
+MERGE (c:City {name: a.city})
+MERGE (a)-[:IN_CITY]->(c);
+
+MATCH (a:Airport)
+MERGE (r:Region {name: a.region})
+MERGE (a)-[:IN_REGION]->(r);
+
+MATCH (a:Airport)
+MATCH (c:Country {code: a.country})
+MERGE (a)-[:IN_COUNTRY]->(c);
+
+MATCH (a:Airport)
+MATCH (ci:City {name: a.city})
+MATCH (co:Country {code: a.country})
+MERGE (ci)-[:IN_COUNTRY]->(co);
+
+MATCH (a:Airport)
+MATCH (r:Region {name: a.region})
+MATCH (co:Country {code: a.country})
+MERGE (r)-[:IN_COUNTRY]->(co);
+
+MATCH (a:Airport)
+MATCH (c:Continent {code: a.continent})
+MERGE (a)-[:ON_CONTINENT]->(c);
+
+MATCH (a:Airport)
+MATCH (ci:City {name: a.city})
+MATCH (co:Continent {code: a.continent})
+MERGE (ci)-[:ON_CONTINENT]->(co);
+
+MATCH (a:Airport)
+MATCH (r:Region {name: a.region})
+MATCH (co:Continent {code: a.continent})
+MERGE (r)-[:ON_CONTINENT]->(co);
+
+MATCH (a:Airport)
+MATCH (c:Country {code: a.country})
+MATCH (co:Continent {code: a.continent})
+MERGE (c)-[:ON_CONTINENT]->(co);
+----
+
 
 
